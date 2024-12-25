@@ -1,3 +1,7 @@
+# Proximal Direct Preference Optimization:Not Only Your Model is a Discriminator but also a Generator.
+
+
+
 ## 背景介绍
 
 在[《Direct Preference Optimization:Your Language Model is Secretly a Reward Model》](https://arxiv.org/pdf/2305.18290)一文中，该文章作者将RLHF的RL强化学习阶段的过程描述为：
@@ -127,3 +131,17 @@ min_{(x \sim \mathcal{D}_{pdpo},y_\theta \sim\pi_\theta(y|x),y_{GT} \sim \mathca
 $
 
 PDPO的生成器不是像GAN随机初始化生成器权重一样，PDPO里面的生成器是初始时本身时一个具有较好输出能力的模型，同时在优化PDPO的判别器的loss（DPO原始的loss）时，$\pi_\theta$的logps也在不断靠近$y_w$的分布，因此本文引入了一个新的参数$\gamma$用于平衡生成器和判别器的loss。
+
+## 实验
+
+### 数据集
+实验数据集：Open AI GSM8K 数学数据集。该数据由7473条训练集和1319条测试集组成。在进行后续的实验中，数据的分配如下。
+DPO使用训练集进行训练，正样本由ChatGPT-4o造取的数据，负样本由Qwen2-7B-Instruct造取的数据。
+PDPO的训练集分为了判别器和生成器，判别器划分6000条数据进行训练，生成器划分1473条数据进行训练。6000条数据的正负样本来源于GPT-4o造取的回答和Qwen2-7B-Instruct回答。生成的正样本也是GPT-4o造取的回复，负样本为$\pi_\theta$生成数据。
+
+### 实验结果
+|#|#|
+|-|-|
+| Qwen2(base)|85.7% |
+| DPO|87.11% |
+| PDPO(ours)| **88.10**(+2.4)%|
