@@ -1,6 +1,10 @@
 # Proximal Direct Preference Optimization:Not Only Your Model is a Discriminator but also a Generator.
 
-
+> Idea占坑，后续会更新理论优化和更多的补充实验说明。\
+> Author: Hepan\
+> Org: Xmov\
+> Email: newtonysls@gmail.com\
+> Date: 2024/12/15
 
 ## 背景介绍
 
